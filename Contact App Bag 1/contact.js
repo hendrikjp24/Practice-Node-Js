@@ -34,14 +34,22 @@ function tulisPertanyaan(pertanyaan){
 function saveContact(nama, noHp, email){
     const contact = {nama, noHp, email};
 
+    const data = fs.readFileSync(filePath, "utf-8");
+
+    if(data == ""){
+        fs.writeFileSync(filePath, "[]", "utf-8");
+    }
+
     const contacts = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     contacts.push(contact);
 
     fs.writeFileSync(filePath, JSON.stringify(contacts), "utf-8");
 
-    rl.close();
-
 }
 
-module.exports = {tulisPertanyaan, saveContact};
+function closeInputUser(){
+    rl.close();
+}
+
+module.exports = {tulisPertanyaan, saveContact, closeInputUser};
