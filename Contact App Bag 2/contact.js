@@ -1,5 +1,6 @@
 const fs = require("fs");
-const validator = require(validator);
+const { json } = require("stream/consumers");
+const validator = require("validator");
 
 const dirPath = "./data";
 
@@ -28,10 +29,20 @@ function saveContact(nama, email, noHp){
         return false;
     }
 
-    //validasi email
-    if(!validator.isEmail(email)){
-        console.log("Mohon masukkan email yang benar!!");
+    //Cek duplikat nama contact
+    const duplikat = file.find(e => e.nama == nama);
+
+    if(duplikat){
+        console.log("Data Contact dengan nama tersebut sudah ada!!");
         return false;
+    }
+
+    //validasi email
+    if(email){
+        if(!validator.isEmail(email)){
+            console.log("Mohon masukkan email yang benar!!");
+            return false;
+        }
     }
 
     //validasi noHp
@@ -40,4 +51,14 @@ function saveContact(nama, email, noHp){
         return false;
     }
 
+    const contact = {nama, email, noHp};
+
+    file.push(contact);
+
+    fs.writeFileSync(filePath, JSON.stringify(file));
+
+    console.log("Data contact berhasil disimpan");
+
 }
+
+module.exports = {saveContact}
