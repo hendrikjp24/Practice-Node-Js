@@ -1,13 +1,14 @@
 const fs = require("fs");
-const { json } = require("stream/consumers");
 const validator = require("validator");
 
+// cek apakah direktori yang dimaksud ada atau tidak
 const dirPath = "./data";
 
 if(!fs.existsSync(dirPath)){
     fs.mkdirSync(dirPath);
 }
 
+// cek apakah file yang dimaksud ada atau tidak
 const filePath = "./data/contact.json";
 
 if(!fs.existsSync(filePath)){
@@ -23,6 +24,7 @@ function loadFile(){
 function saveContact(nama, email, noHp){
     const file = loadFile();
 
+    // in the below is a validation using package validator. but, i have problem how to ignore space supaya masuk ke dalam pattern nya.
     //Validasi inputan nama
     // if(!validator.isAlpha(nama, "az-AZ")){
     //     console.log("Nama hanya boleh mengandung huruf saja!!");
@@ -73,4 +75,24 @@ function saveContact(nama, email, noHp){
 
 }
 
-module.exports = {saveContact}
+// find contact by name
+function findDataContactByName(name){
+    const file = loadFile();
+
+    const dataContact = file.find(e => e.nama.toLowerCase() == name.toLowerCase());
+
+    if(!dataContact){
+        console.log("Tidak ada contact dengan nama tersebut!!");
+        return false;
+    }
+
+    console.log(`Data contact ${dataContact.nama} : \n`);
+
+    console.log(`Nama : ${dataContact.nama}`);
+    console.log(`No Hp : ${dataContact.noHp}`);
+
+    (Object.keys(dataContact).length == 3) ? console.log(`Email : ${dataContact.email}`) : "";
+
+}
+
+module.exports = {saveContact, findDataContactByName}

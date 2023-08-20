@@ -28,6 +28,20 @@ yargs.command({
     }
 }).demandCommand();
 
-
+yargs.command({
+    command : 'find',
+    describe : 'find data contact',
+    builder : {
+        nama : {
+            alias : 'name',
+            describe : 'nama contact',
+            demandOption : true,
+            type : 'string'
+        }
+    },
+    handler(argv){
+        contacts.findDataContactByName(argv.nama);
+    }
+})
 
 yargs.parse();
