@@ -62,4 +62,13 @@ yargs.command({
     }
 })
 
+//command for llist contact
+yargs.command({
+    command : 'list',
+    describe : 'List Data Contact',
+    handler(argv){
+        contacts.listContact();
+    }
+})
+
 yargs.parse();

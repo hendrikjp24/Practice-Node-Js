@@ -124,6 +124,37 @@ function deleteContactByName(name){
 
 }
 
+// function to sort data by name
+function sortDataByName(){
+    const file = loadFile();
+
+    return file.sort((x, y)=>{
+        let a = x.nama.toLowerCase(),
+            b = y.nama.toLowerCase();
+
+        return (a == b) ? 0 : (a > b) ? 1 : -1;
+    })
+
+}
+
+//list contact abjad sesuai dengan huruf
+function listContact(){
+    const contacts = sortDataByName();
+
+    const file = loadFile();
+
+    console.log("\nList Data Contact : ");
+
+    //Sort By Name
+    for(let i = 1; i <= contacts.length; i++){
+        console.log(`${i}. ${contacts[i-1].nama} - ${contacts[i-1].noHp}`);
+    }
+
+    // belum sort
+    // for(let i = 1; i <= file.length; i++){
+    //     console.log(`${i}. ${file[i-1].nama} - ${file[i-1].noHp}`);
+    // }
+}
 
 
-module.exports = {saveContact, findDataContactByName, deleteContactByName}
+module.exports = {saveContact, findDataContactByName, deleteContactByName, listContact}
