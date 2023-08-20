@@ -24,13 +24,25 @@ function saveContact(nama, email, noHp){
     const file = loadFile();
 
     //Validasi inputan nama
-    if(!validator.isAlpha(nama, "az-AZ")){
-        console.log("Nama hanya boleh mengandung huruf saja!!");
+    // if(!validator.isAlpha(nama, "az-AZ")){
+    //     console.log("Nama hanya boleh mengandung huruf saja!!");
+    //     return false;
+    // }
+
+    // validasi manual menggunakan regex
+    const regexNama = new RegExp("^[A-Za-z ]+$"); // Penulisan regex di javascript memakai ^  dan diakiri dengan + $
+
+    // ^ => diawalai dengan
+    // +$ => diakhiri dengan
+
+    // dengan menggunakan method test() akan mengembalikan nilai boolean
+    if(regexNama.test(nama) == false){
+        console.log("Nama hanya boleh mengandung huruf alphabet saja!!");
         return false;
     }
 
-    //Cek duplikat nama contact
-    const duplikat = file.find(e => e.nama == nama);
+    // cek duplikat berdasarkan nama
+    const duplikat = file.find(e => e.nama.toLowerCase() == nama.toLowerCase());
 
     if(duplikat){
         console.log("Data Contact dengan nama tersebut sudah ada!!");
