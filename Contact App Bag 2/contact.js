@@ -95,4 +95,35 @@ function findDataContactByName(name){
 
 }
 
-module.exports = {saveContact, findDataContactByName}
+//delete contact by name 
+function deleteContactByName(name){
+    // load file
+    const file = loadFile();
+
+    // mencari data berdasarkan nama di contacts
+    const cekData = file.find(e => e.nama.toLowerCase() == name.toLowerCase());
+
+    if(!cekData){
+        console.log(`Tidak ada data contact dengan nama ${name}!!!`);
+        return false;
+
+    }
+
+
+    for(let i = 0; i < file.length; i++){
+        if(file[i].nama.toLowerCase() == name.toLowerCase()){
+            // fungsi splice dibawah untuk mengambil data value dari array berdasarkan nama
+            file.splice(i, 1);
+        }
+    }
+
+    // memasukkan/ simpan ke dalam file setelah data contact yang dimaksud dihapus
+    fs.writeFileSync(filePath,JSON.stringify(file), "utf-8");
+
+    console.log('Data contact berhasil dihapus!!');
+
+}
+
+
+
+module.exports = {saveContact, findDataContactByName, deleteContactByName}

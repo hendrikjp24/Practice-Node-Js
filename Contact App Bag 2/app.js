@@ -1,6 +1,6 @@
 const yargs = require("yargs");
 const contacts = require("./contact");
-
+// command add
 yargs.command({
     command: 'add',
     describe: 'Menambahkan data contact baru',
@@ -28,6 +28,7 @@ yargs.command({
     }
 }).demandCommand();
 
+// command find
 yargs.command({
     command : 'find',
     describe : 'find data contact',
@@ -41,6 +42,23 @@ yargs.command({
     },
     handler(argv){
         contacts.findDataContactByName(argv.nama);
+    }
+})
+
+// command delete
+yargs.command({
+    command : 'delete',
+    describe : 'delete contact by name',
+    builder : {
+        nama: {
+            alias : 'name',
+            describe : 'nama contact',
+            demandOption : true,
+            type : 'string'
+        }
+    },
+    handler(argv){
+        contacts.deleteContactByName(argv.nama);
     }
 })
 
